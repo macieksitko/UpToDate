@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/prod_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/prod_img"
+        android:paddingStart="10dp"
+        android:paddingTop="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/prod_name"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/prod_img"
+        android:paddingStart="10dp"
+        android:paddingTop="7dp"
+        android:text="Expires on "
+        android:textSize="15sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/date_of_expiring"
+        android:layout_alignParentEnd="true"
+        android:paddingEnd="10dp"
+        android:textSize="15sp"
+        android:layout_below="@+id/prod_name"
+        />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:src="@drawable/prod_img"
+        android:id="@+id/prod_img"
+        android:layout_alignParentLeft="true"
+        />
+
+
+
+</RelativeLayout>
