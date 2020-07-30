@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">UpToDate</string>
+    <string name="add_product_btn">Add</string>
+    <string name="product_name_label">Product name</string>
+    <string name="date_of_expiry_label">Date of expiry</string>
+    <string name="submit_btn">Submit</string>
 </resources>
