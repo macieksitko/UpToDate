@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity(),ProductListAdapter.OnProductListener {
         recyclerview.adapter = adapter
         recyclerview.layoutManager = LinearLayoutManager(this)
 
-        //productViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
         productViewModel.allProducts.observe(this, Observer {products->
             products?.let { adapter.setProducts(it) }
         })
