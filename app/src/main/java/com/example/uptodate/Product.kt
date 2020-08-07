@@ -9,7 +9,8 @@ import java.util.*
 @Entity(tableName = "product_table")
 data class Product (
     val product_name: String,
-    val date_of_expiry: String //change to DateTimeFormat
+    val date_of_expiry: String,
+    val date_of_adding: String
 ){
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0

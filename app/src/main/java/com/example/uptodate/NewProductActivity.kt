@@ -12,24 +12,27 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_new_product.*
+import kotlinx.android.synthetic.main.product_details_bottom_sheet.*
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
 class NewProductActivity : AppCompatActivity() {
     private val productViewModel: ProductViewModel by viewModels()
-    private val c = Calendar.getInstance()
-    private val year = c.get(Calendar.YEAR)
-    private val month = c.get(Calendar.MONTH)
-    private val day = c.get(Calendar.DAY_OF_MONTH)
-    private var dateOfExpiry = ""
-    private val receiver = DateOfExpiryBroadcastReceiver()
 
+
+    private val receiver = DateOfExpiryBroadcastReceiver()
+    private var dateOfExpiry = ""
+    private var dateOfAdding = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_product)
         setupListeners()
         createNotificationChannel()
+
     }
 
     override fun onDestroy() {
@@ -43,21 +46,25 @@ class NewProductActivity : AppCompatActivity() {
         }
         submitBtn.setOnClickListener{
             val productName = textInputProductName.editText?.text.toString().trim()
-            //val dateOfExpiry = textInputDateOfExpiry.editText?.text.toString().trim()
+            val currentDate = LocalDateTime.now()
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yy")
+            dateOfAdding = currentDate.format(formatter)
 
-            val product = Product(productName,dateOfExpiry)
+            val product = Product(productName,dateOfExpiry,dateOfAdding)
             saveProduct(product)
             setAlarm(dateOfExpiry)
-
+            setResult(Activity.RESULT_OK)
+            finish()
         }
     }
 
     private fun setDatePicker(){
+        val c = Calendar.getInstance()
         val datePicker = DatePickerDialog(this,DatePickerDialog.OnDateSetListener { _, mYear, mMonth, mDay ->
             val newMonth = mMonth + 1
             dateOfExpiry = "$mDay/$newMonth/$mYear"
             editTextDateOfExpiry.setText(dateOfExpiry)
-        },year,month,day)
+        },c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH))
         datePicker.show()
     }
     private fun saveProduct(product: Product){
@@ -70,7 +77,7 @@ class NewProductActivity : AppCompatActivity() {
         val millis = date.time
         val time = System.currentTimeMillis()
 
-        Log.d("TAG","time to left in milliseconds ${millis - time}")
+        Log.d("TAG","time left in milliseconds ${millis - time}")
         val alarms =
             this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 

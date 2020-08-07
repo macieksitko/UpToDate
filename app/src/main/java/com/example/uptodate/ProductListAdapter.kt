@@ -44,7 +44,7 @@ class ProductListAdapter(
                     selectedPosition = -1
                 }
                 R.id.itemBackground ->{
-                    TODO()
+                    listener.onProductClick(position)
                 }
             }
         }
@@ -106,7 +106,7 @@ class ProductListAdapter(
         fun onImageClick(position: Int)
     }
 
-    fun getWordAtPosition(position: Int): Product {
+    fun getProductAtPosition(position: Int): Product {
         return products[position]
     }
 
