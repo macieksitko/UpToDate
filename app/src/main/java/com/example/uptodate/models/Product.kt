@@ -1,4 +1,4 @@
-package com.example.uptodate
+package com.example.uptodate.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -10,8 +10,9 @@ import java.util.*
 data class Product (
     val product_name: String,
     val date_of_expiry: String,
-    val date_of_adding: String
+    val date_of_adding: String,
+    val isActive: Boolean
 ){
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
+    var id: Long = 0
 }

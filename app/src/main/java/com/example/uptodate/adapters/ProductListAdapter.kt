@@ -1,4 +1,4 @@
-package com.example.uptodate
+package com.example.uptodate.adapters
 
 import android.graphics.Color
 import android.util.Log
@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
+import com.example.uptodate.R
+import com.example.uptodate.models.Product
 
 
 private var selectedPosition = -1
@@ -58,6 +59,38 @@ class ProductListAdapter(
         }
 
     }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
+        val inflater: LayoutInflater = LayoutInflater.from(parent.context)
+        val itemView = inflater.inflate(R.layout.recyclerview_item, parent, false)
+        return ProductViewHolder(itemView)
+    }
+
+    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
+        val current = products[position]
+        holder.textViewProductName.text = current.product_name
+        holder.textViewDateOfExpiring.text = current.date_of_expiry
+        if (position == selectedPosition){
+            holder.imageViewProduct.setImageResource(R.drawable.baseline_delete_black_18dp)
+            holder.itemBackground.setBackgroundColor(Color.parseColor("#ff6090"))
+        }else{
+            holder.imageViewProduct.setImageResource(R.drawable.prod_img)
+            holder.itemBackground.setBackgroundColor(Color.parseColor("#FFFFFF"))
+        }
+        if (!current.isActive){
+            holder.itemBackground.alpha = 0.5f
+        }
+    }
+
+    internal fun setProducts(products: List<Product>) {
+        this.products = products
+        notifyDataSetChanged()
+    }
+
+    override fun getItemCount() = products.size
+
+    fun getProductAtPosition(position: Int): Product {
+        return products[position]
+    }
 
     private fun animateProductIcon(imageViewProduct:View){
         YoYo.with(Techniques.RubberBand)
@@ -72,42 +105,9 @@ class ProductListAdapter(
             .playOn(itemBackground)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val inflater: LayoutInflater = LayoutInflater.from(parent.context)
-        val itemView = inflater.inflate(R.layout.recyclerview_item, parent, false)
-        return ProductViewHolder(itemView)
-    }
-
-    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        val current = products[position]
-        holder.textViewProductName.text = current.product_name
-        holder.textViewDateOfExpiring.text = current.date_of_expiry
-        Log.d("TAG","position is fdsfsadfasfa $position")
-        if (position == selectedPosition){
-            holder.imageViewProduct.setImageResource(R.drawable.baseline_delete_black_18dp)
-            holder.itemBackground.setBackgroundColor(Color.parseColor("#ff6090"))
-        }else{
-            holder.imageViewProduct.setImageResource(R.drawable.prod_img)
-            holder.itemBackground.setBackgroundColor(Color.parseColor("#FFFFFF"))
-
-        }
-    }
-
-    internal fun setProducts(products: List<Product>) {
-        this.products = products
-        notifyDataSetChanged()
-    }
-
-    override fun getItemCount() = products.size
-
     interface OnProductListener{
         fun onProductClick(position: Int)
         fun onProductLongClick(position: Int)
         fun onImageClick(position: Int)
     }
-
-    fun getProductAtPosition(position: Int): Product {
-        return products[position]
-    }
-
 }

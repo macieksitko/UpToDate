@@ -1,20 +1,25 @@
-package com.example.uptodate
+package com.example.uptodate.activities
 
 import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.example.uptodate.fragments.ProductBottomSheet
+import com.example.uptodate.adapters.ProductListAdapter
+import com.example.uptodate.R
+import com.example.uptodate.models.ProductViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.product_details_bottom_sheet.*
-import kotlinx.android.synthetic.main.recyclerview_item.*
 
-class MainActivity : AppCompatActivity(),ProductListAdapter.OnProductListener {
+class MainActivity : AppCompatActivity(),
+    ProductListAdapter.OnProductListener {
 
     private val productViewModel: ProductViewModel by viewModels()
     private val adapter = ProductListAdapter(this)
@@ -27,6 +32,7 @@ class MainActivity : AppCompatActivity(),ProductListAdapter.OnProductListener {
 
         setupProductList()
         setupListeners()
+        createNotificationChannel()
 
     }
     private fun setupProductList(){
@@ -45,12 +51,14 @@ class MainActivity : AppCompatActivity(),ProductListAdapter.OnProductListener {
         }
     }
     override fun onProductClick(position: Int) {
-        val bottomSheetFragment = ProductBottomSheet()
+        val bottomSheetFragment =
+            ProductBottomSheet()
         val product = adapter.getProductAtPosition(position)
         val productName = product.product_name
         val dateOfAdding = product.date_of_adding
         val dateOfExpiring = product.date_of_expiry
         val bundle = Bundle()
+        Log.d("TAG","product id ${product.id}")
         bundle.putString("productName", productName)
         bundle.putString("dateOfAdding", dateOfAdding)
         bundle.putString("dateOfExpiring", dateOfExpiring)
@@ -79,5 +87,22 @@ class MainActivity : AppCompatActivity(),ProductListAdapter.OnProductListener {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == 2){}
 
+    }
+    private fun createNotificationChannel() {
+
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.channel_name)
+            val descriptionText = getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(getString(R.string.channel_id), name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 }
