@@ -1,10 +1,10 @@
 package com.example.uptodate.adapters
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -52,13 +52,26 @@ class ProductListAdapter(
         override fun onLongClick(v: View?): Boolean {
             val position = adapterPosition
             selectedPosition = position
-            animateProductIcon(imageViewProduct)
-            animateItemBackground(itemBackground)
+
+            if (position == selectedPosition){
+                imageViewProduct.setImageResource(R.drawable.baseline_delete_black_18dp)
+                itemBackground.setBackgroundColor(Color.parseColor("#ff6090"))
+            }else{
+                imageViewProduct.setImageResource(R.drawable.prod_img)
+                itemBackground.setBackgroundColor(Color.parseColor("#FFFFFF"))
+            }
+            setOnLongClickAnimation(itemBackground,imageViewProduct)
             listener.onProductLongClick(position)
             return true
         }
 
     }
+
+    private fun setOnLongClickAnimation(itemBackground: RelativeLayout, imageViewProduct: ImageView) {
+        animateProductIcon(imageViewProduct)
+        animateItemBackground(itemBackground)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
         val itemView = inflater.inflate(R.layout.recyclerview_item, parent, false)
@@ -69,16 +82,14 @@ class ProductListAdapter(
         val current = products[position]
         holder.textViewProductName.text = current.product_name
         holder.textViewDateOfExpiring.text = current.date_of_expiry
-        if (position == selectedPosition){
-            holder.imageViewProduct.setImageResource(R.drawable.baseline_delete_black_18dp)
-            holder.itemBackground.setBackgroundColor(Color.parseColor("#ff6090"))
-        }else{
-            holder.imageViewProduct.setImageResource(R.drawable.prod_img)
-            holder.itemBackground.setBackgroundColor(Color.parseColor("#FFFFFF"))
-        }
+
         if (!current.isActive){
             holder.itemBackground.alpha = 0.5f
-        }
+        }else holder.itemBackground.alpha = 1.0f
+    }
+
+    private fun setFadeAnimation(viewToAnimate: View) {
+        TODO()
     }
 
     internal fun setProducts(products: List<Product>) {

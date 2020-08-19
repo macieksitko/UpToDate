@@ -7,4 +7,8 @@
     <string name="channel_id">com.example.uptodate</string>
     <string name="channel_name">Up to date</string>
     <string name="channel_description">Your product s date has expired</string>
+    <string name="ok">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="deleteDialogTitle">Delete product</string>
+    <string name="deleteDialogSupportingText">Are you sure  you want to remove this product?</string>
 </resources>

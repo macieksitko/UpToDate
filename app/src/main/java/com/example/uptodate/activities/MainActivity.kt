@@ -16,6 +16,7 @@ import com.example.uptodate.fragments.ProductBottomSheet
 import com.example.uptodate.adapters.ProductListAdapter
 import com.example.uptodate.R
 import com.example.uptodate.models.ProductViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(),
@@ -57,30 +58,45 @@ class MainActivity : AppCompatActivity(),
         val productName = product.product_name
         val dateOfAdding = product.date_of_adding
         val dateOfExpiring = product.date_of_expiry
+        val isActive = product.isActive
         val bundle = Bundle()
         Log.d("TAG","product id ${product.id}")
         bundle.putString("productName", productName)
         bundle.putString("dateOfAdding", dateOfAdding)
         bundle.putString("dateOfExpiring", dateOfExpiring)
+        bundle.putBoolean("activityState", isActive)
         bottomSheetFragment.arguments = bundle
         bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
     }
 
     override fun onProductLongClick(position: Int) {
-        adapter.notifyDataSetChanged()
         isProductClicked = true
         onDeletePosition = position
     }
 
     override fun onImageClick(position: Int) {
         if (isProductClicked){
-            deleteSelectedProduct()
-            isProductClicked = false
+            showDeleteDialog()
         }
     }
     private fun deleteSelectedProduct(){
+
         val product= adapter.getProductAtPosition(onDeletePosition)
         productViewModel.deleteProduct(product)
+    }
+
+    private fun showDeleteDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(resources.getString(R.string.deleteDialogTitle))
+            .setMessage(resources.getString(R.string.deleteDialogSupportingText))
+            .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
+                dialog.cancel()
+            }
+            .setPositiveButton(resources.getString(R.string.ok)) { dialog, which ->
+                deleteSelectedProduct()
+            }
+            .show()
+        isProductClicked = false
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

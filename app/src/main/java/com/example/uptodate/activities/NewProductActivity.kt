@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uptodate.receivers.DateOfExpiryBroadcastReceiver
@@ -31,8 +32,15 @@ class NewProductActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_product)
         registerReceiver(receiverExactDate, filter)
         setupListeners()
+        setProgressBarGone()
     }
 
+    private fun setProgressBarGone() {
+        newProductProgressBar.visibility = View.GONE
+    }
+    private fun setProgressBarVisible() {
+        newProductProgressBar.visibility = View.VISIBLE
+    }
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(receiverExactDate)
@@ -51,6 +59,7 @@ class NewProductActivity : AppCompatActivity() {
                 isActive = true
             )
             saveProduct(product)
+            setProgressBarVisible()
             setResult(Activity.RESULT_OK)
             finish()
         }
@@ -77,9 +86,6 @@ class NewProductActivity : AppCompatActivity() {
         val dateInMillis = parseDateToMillis(dateOfExpiry)
         setAlarm(dateInMillis,id,prodName)
     }
-   // 38518972
-    //38572589
-    //38580632
     private fun getCurrentDate():String{
         val currentDate = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")

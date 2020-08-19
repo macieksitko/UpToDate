@@ -1,5 +1,6 @@
 package com.example.uptodate.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +33,14 @@ class ProductBottomSheet() : BottomSheetDialogFragment() {
         val productName = arguments?.getString("productName")
         val dateOfAdding =  arguments?.getString("dateOfAdding")
         val dateOfExpiring =  arguments?.getString("dateOfExpiring")
+        val isActive =  arguments?.getBoolean("activityState")
+        if (isActive!!){
+            activityStateTextView.text = "Active"
+            activityStateTextView.setTextColor(Color.parseColor("#8bc34a"))
+        } else {
+            activityStateTextView.text = "Inctive"
+            activityStateTextView.setTextColor(Color.parseColor("#ff0033"))
+        }
         productNameTextView.text = productName
         dateOfAddingTextView.text = dateOfAdding
         dateOfExpiringTextView.text = dateOfExpiring
