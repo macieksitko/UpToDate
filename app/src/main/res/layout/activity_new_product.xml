@@ -20,6 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
         android:layout_centerHorizontal="true"
+        app:errorEnabled="true"
+        app:endIconMode="clear_text"
         android:hint="@string/product_name_label">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -33,6 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
+        app:errorEnabled="true"
         android:layout_below="@+id/textInputProductName"
         android:layout_centerHorizontal="true"
         android:hint="@string/date_of_expiry_label"

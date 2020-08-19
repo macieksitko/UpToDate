@@ -5,10 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isEmpty
 import com.example.uptodate.receivers.DateOfExpiryBroadcastReceiver
 import com.example.uptodate.R
 import com.example.uptodate.models.Product
@@ -58,11 +60,21 @@ class NewProductActivity : AppCompatActivity() {
                 getCurrentDate(),
                 isActive = true
             )
-            saveProduct(product)
-            setProgressBarVisible()
-            setResult(Activity.RESULT_OK)
-            finish()
+           if(isNewProductCorrect()){
+               saveProduct(product)
+               setProgressBarVisible()
+               setResult(Activity.RESULT_OK)
+               finish()
+           }else setResult(Activity.RESULT_CANCELED)
         }
+    }
+
+    private fun isNewProductCorrect():Boolean {
+        return if (textInputProductName.editText?.text.toString().trim().isEmpty() || (textInputDateOfExpiry.editText?.text.toString().trim().isEmpty())){
+            if(textInputProductName.editText?.text.toString().trim().isEmpty()) textInputProductName.error = getString(R.string.errorNewProductName)
+            if (textInputDateOfExpiry.editText?.text.toString().trim().isEmpty())  textInputDateOfExpiry.error = getString(R.string.errorNewProductDate)
+            false
+        } else true
     }
 
     private fun setDatePicker():String{
@@ -98,13 +110,7 @@ class NewProductActivity : AppCompatActivity() {
         return date.time
     }
     private fun setAlarm(dateInMillis: Long,prodId: Long,prodName: String){
-        val dayBeforeDateInMillis = dateInMillis - MILLIS_IN_DAY+53617
-
-        Log.d("TAG","czas do alarmu dayBefore.... ${dayBeforeDateInMillis - System.currentTimeMillis()}")
-        Log.d("TAG","czas do alarmu dateinMillis.... ${dateInMillis - System.currentTimeMillis()}")
-        Log.d("TAG","czas ktory jest teraz.... ${System.currentTimeMillis()}")
-        Log.d("TAG","czas ktory jest dzień przed.... $dayBeforeDateInMillis")
-        Log.d("TAG","czas ktory jest nastawiony alarm.... $dateInMillis")
+        val dayBeforeDateInMillis = dateInMillis - MILLIS_IN_DAY
 
         val alarms =
             this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
