@@ -4,26 +4,26 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.example.uptodate.R
 import com.example.uptodate.models.Product
+import java.util.*
 
 
 var selectedPosition = -1
 
 class ProductListAdapter(
     private val listener: OnProductListener
-)  : RecyclerView.Adapter<ProductListAdapter.ProductViewHolder>() {
+)  : RecyclerView.Adapter<ProductListAdapter.ProductViewHolder>(),
+    Filterable
+{
 
 
-    private var products = emptyList<Product>() // Cached copy of products
-
+    private var products :MutableList<Product> = arrayListOf() // Cached copy of products
+    private var productsCopy :MutableList<Product> = arrayListOf()
     inner class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnClickListener,View.OnLongClickListener{
         val textViewProductName: TextView = itemView.findViewById(R.id.prod_name)
         val textViewDateOfExpiring: TextView = itemView.findViewById(R.id.date_of_expiring)
@@ -38,11 +38,11 @@ class ProductListAdapter(
         override fun onClick(v: View?) {
             val position = adapterPosition
             when(v?.id){
-                R.id.prodImg ->{
+                R.id.prodImg -> {
                     listener.onImageClick(position)
                     selectedPosition = -1
                 }
-                R.id.itemBackground ->{
+                R.id.itemBackground -> {
                     listener.onProductClick(position)
                 }
             }
@@ -63,12 +63,12 @@ class ProductListAdapter(
     }
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val current = products[position]
-        holder.textViewProductName.text = current.product_name
-        holder.textViewDateOfExpiring.text = current.date_of_expiry
+        holder.textViewProductName.text = current.getProductName()
+        holder.textViewDateOfExpiring.text = current.getDateOfExpiry()
         if (position == selectedPosition){
             holder.imageViewProduct.setImageResource(R.drawable.baseline_delete_black_18dp)
             holder.itemBackground.setBackgroundColor(Color.parseColor("#ff6090"))
-            setOnLongClickAnimation(holder.itemBackground,holder.imageViewProduct)
+            setOnLongClickAnimation(holder.itemBackground, holder.imageViewProduct)
         }else{
             holder.imageViewProduct.setImageResource(R.drawable.prod_img)
             holder.itemBackground.setBackgroundColor(Color.parseColor("#FFFFFF"))
@@ -83,29 +83,52 @@ class ProductListAdapter(
         animateItemBackground(itemBackground)
     }
 
-    private fun setFadeAnimation(viewToAnimate: View) {
-        TODO()
-    }
-
-    internal fun setProducts(products: List<Product>) {
+    internal fun setProducts(products: MutableList<Product>) {
         this.products = products
+        productsCopy = products
         notifyDataSetChanged()
     }
 
     override fun getItemCount() = products.size
 
+    override fun getFilter(): Filter {
+        return object : Filter() {
+
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                var filteredList:MutableList<Product> = arrayListOf()
+                if (constraint.isNullOrBlank()) {
+                    filteredList.addAll(productsCopy)
+                } else {
+                    val filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim()
+                    for (item in productsCopy) {
+                        if (item.getProductName().toLowerCase(Locale.ROOT).contains(filterPattern)) {
+                            filteredList.add(item)
+                        }
+                    }
+                }
+                val filterResults = FilterResults()
+                filterResults.values = filteredList
+                return filterResults
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults) {
+                products = results.values as MutableList<Product>
+                notifyDataSetChanged()
+            }
+        }
+    }
     fun getProductAtPosition(position: Int): Product {
         return products[position]
     }
 
-    private fun animateProductIcon(imageViewProduct:View){
+    private fun animateProductIcon(imageViewProduct: View){
         YoYo.with(Techniques.RubberBand)
             .duration(800)
             .repeat(1)
             .playOn(imageViewProduct)
     }
 
-    private fun animateItemBackground(itemBackground:View){
+    private fun animateItemBackground(itemBackground: View){
         YoYo.with(Techniques.Shake)
             .duration(500)
             .playOn(itemBackground)

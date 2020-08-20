@@ -15,4 +15,12 @@ data class Product (
 ){
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+
+    fun getProductName():String{
+        return product_name
+    }
+    fun getDateOfExpiry():String{
+        return date_of_expiry
+    }
+
 }
