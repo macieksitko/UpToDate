@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +16,9 @@ import com.example.uptodate.receivers.DateOfExpiryBroadcastReceiver
 import com.example.uptodate.R
 import com.example.uptodate.models.Product
 import com.example.uptodate.models.ProductViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_new_product.*
+import kotlinx.android.synthetic.main.dialog_ondelete.view.*
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -33,6 +36,7 @@ class NewProductActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_product)
         registerReceiver(receiverExactDate, filter)
+        //setSupportActionBar(materialToolbar1)
         setupListeners()
         setProgressBarGone()
     }
@@ -49,6 +53,9 @@ class NewProductActivity : AppCompatActivity() {
     }
 
     private fun setupListeners(){
+        backArrow.setOnClickListener {
+            showCustomDialog()
+        }
         textInputProductName.setOnClickListener{
             textInputProductName.error = null
         }
@@ -141,6 +148,25 @@ class NewProductActivity : AppCompatActivity() {
 
         alarms.setExact(AlarmManager.RTC_WAKEUP,dayBeforeDateInMillis,dayBeforeWarning)
         alarms.setExact(AlarmManager.RTC_WAKEUP, dateInMillis, exactDayWarning)
+    }
+    private fun showCustomDialog(){
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_oncancel, null)
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(dialogView)
+
+        val mAlertCreate = mBuilder.create()
+        mAlertCreate.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val mAlertDialog = mBuilder.show()
+
+        dialogView.btnNegative.setOnClickListener{
+            mAlertDialog.dismiss()
+        }
+        dialogView.btnPositive.setOnClickListener{
+            finish()
+            mAlertDialog.dismiss()
+        }
+
     }
 
 }
