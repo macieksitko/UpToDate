@@ -49,6 +49,12 @@ class NewProductActivity : AppCompatActivity() {
     }
 
     private fun setupListeners(){
+        textInputProductName.setOnClickListener{
+            textInputProductName.error = null
+        }
+        textInputDateOfExpiry.setOnClickListener{
+            textInputDateOfExpiry.error = null
+        }
         calendarIcon.setOnClickListener{
             dateOfExpiry = setDatePicker()
         }

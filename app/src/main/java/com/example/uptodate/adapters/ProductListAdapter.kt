@@ -15,7 +15,7 @@ import com.example.uptodate.R
 import com.example.uptodate.models.Product
 
 
-private var selectedPosition = -1
+var selectedPosition = -1
 
 class ProductListAdapter(
     private val listener: OnProductListener
@@ -40,8 +40,6 @@ class ProductListAdapter(
             when(v?.id){
                 R.id.prodImg ->{
                     listener.onImageClick(position)
-                    imageViewProduct.setImageResource(R.drawable.prod_img)
-                    itemBackground.setBackgroundColor(Color.parseColor("#FFFFFF"))
                     selectedPosition = -1
                 }
                 R.id.itemBackground ->{
@@ -52,24 +50,10 @@ class ProductListAdapter(
         override fun onLongClick(v: View?): Boolean {
             val position = adapterPosition
             selectedPosition = position
-
-            if (position == selectedPosition){
-                imageViewProduct.setImageResource(R.drawable.baseline_delete_black_18dp)
-                itemBackground.setBackgroundColor(Color.parseColor("#ff6090"))
-            }else{
-                imageViewProduct.setImageResource(R.drawable.prod_img)
-                itemBackground.setBackgroundColor(Color.parseColor("#FFFFFF"))
-            }
-            setOnLongClickAnimation(itemBackground,imageViewProduct)
             listener.onProductLongClick(position)
             return true
         }
 
-    }
-
-    private fun setOnLongClickAnimation(itemBackground: RelativeLayout, imageViewProduct: ImageView) {
-        animateProductIcon(imageViewProduct)
-        animateItemBackground(itemBackground)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -77,15 +61,26 @@ class ProductListAdapter(
         val itemView = inflater.inflate(R.layout.recyclerview_item, parent, false)
         return ProductViewHolder(itemView)
     }
-
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val current = products[position]
         holder.textViewProductName.text = current.product_name
         holder.textViewDateOfExpiring.text = current.date_of_expiry
-
+        if (position == selectedPosition){
+            holder.imageViewProduct.setImageResource(R.drawable.baseline_delete_black_18dp)
+            holder.itemBackground.setBackgroundColor(Color.parseColor("#ff6090"))
+            setOnLongClickAnimation(holder.itemBackground,holder.imageViewProduct)
+        }else{
+            holder.imageViewProduct.setImageResource(R.drawable.prod_img)
+            holder.itemBackground.setBackgroundColor(Color.parseColor("#FFFFFF"))
+        }
         if (!current.isActive){
             holder.itemBackground.alpha = 0.5f
         }else holder.itemBackground.alpha = 1.0f
+    }
+
+    private fun setOnLongClickAnimation(itemBackground: RelativeLayout, imageViewProduct: ImageView) {
+        animateProductIcon(imageViewProduct)
+        animateItemBackground(itemBackground)
     }
 
     private fun setFadeAnimation(viewToAnimate: View) {
