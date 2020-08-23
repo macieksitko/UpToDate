@@ -69,7 +69,6 @@ class MainActivity : AppCompatActivity(),
         })
         searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-                // TODO: do something...
                 return true
             }
 
