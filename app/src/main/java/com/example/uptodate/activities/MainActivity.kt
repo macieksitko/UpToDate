@@ -67,6 +67,16 @@ class MainActivity : AppCompatActivity(),
                 return false
             }
         })
+        searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                return true
+            }
+
+            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                setupProductList()
+                return true
+            }
+        })
         return true
     }
     private fun setupProductList(){
