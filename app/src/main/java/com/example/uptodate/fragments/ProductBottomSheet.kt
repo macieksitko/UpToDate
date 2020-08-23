@@ -12,9 +12,6 @@ import kotlinx.android.synthetic.main.product_details_bottom_sheet.*
 class ProductBottomSheet() : BottomSheetDialogFragment() {
 
     private var fragmentView: View? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,10 +32,10 @@ class ProductBottomSheet() : BottomSheetDialogFragment() {
         val dateOfExpiring =  arguments?.getString("dateOfExpiring")
         val isActive =  arguments?.getBoolean("activityState")
         if (isActive!!){
-            activityStateTextView.text = "Active"
+            activityStateTextView.text = getString(R.string.activeState)
             activityStateTextView.setTextColor(Color.parseColor("#8bc34a"))
         } else {
-            activityStateTextView.text = "Inctive"
+            activityStateTextView.text = getString(R.string.inactiveState)
             activityStateTextView.setTextColor(Color.parseColor("#ff0033"))
         }
         productNameTextView.text = productName
