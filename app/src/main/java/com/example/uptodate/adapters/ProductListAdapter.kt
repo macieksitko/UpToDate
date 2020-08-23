@@ -95,7 +95,7 @@ class ProductListAdapter(
         return object : Filter() {
 
             override fun performFiltering(constraint: CharSequence?): FilterResults {
-                var filteredList:MutableList<Product> = arrayListOf()
+                val filteredList:MutableList<Product> = arrayListOf()
                 if (constraint.isNullOrBlank()) {
                     filteredList.addAll(productsCopy)
                 } else {

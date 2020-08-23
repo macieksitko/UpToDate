@@ -4,9 +4,9 @@
     <string name="product_name_label">Product name</string>
     <string name="date_of_expiry_label">Date of expiry</string>
     <string name="submit_btn">Submit</string>
-    <string name="channel_id">com.example.uptodate</string>
-    <string name="channel_name">Up to date</string>
-    <string name="channel_description">Your product s date has expired</string>
+    <string name="channelId">com.example.uptodate</string>
+    <string name="channelName">Up to date</string>
+    <string name="channelDescription">Your product s date has expired</string>
     <string name="ok">Yes</string>
     <string name="cancel">Cancel</string>
     <string name="cancelDialogTitle">Cancel</string>
@@ -16,4 +16,11 @@
     <string name="errorNewProductName">Product name is empty</string>
     <string name="errorNewProductDate">Product date is empty</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="activeState">Active</string>
+    <string name="inactiveState">Inactive</string>
+    <string name="notificationTextTitle">UpToDate warning</string>
+    <string name="newProductActivityToolbar">New product</string>
+    <string name="productDetailedViewSubtitle">Details</string>
+    <string name="productDetailedViewFirstField">Added on</string>
+    <string name="productDetailedViewSecondField">Expires on</string>
 </resources>

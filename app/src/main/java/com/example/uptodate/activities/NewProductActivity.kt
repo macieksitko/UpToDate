@@ -24,23 +24,25 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-
+private const val MILLIS_IN_DAY = 86400000
 class NewProductActivity : AppCompatActivity() {
+
     private val productViewModel: ProductViewModel by viewModels()
     private val receiverExactDate =
         DateOfExpiryBroadcastReceiver()
     private var dateOfExpiry = ""
-    private val filter = IntentFilter("ALARM_ACTION")
-    private val MILLIS_IN_DAY = 86400000
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_product)
-        registerReceiver(receiverExactDate, filter)
-        //setSupportActionBar(materialToolbar1)
+        registerReceivers()
         setupListeners()
         setProgressBarGone()
     }
-
+    private fun registerReceivers(){
+        val filter = IntentFilter("ALARM_ACTION")
+        registerReceiver(receiverExactDate, filter)
+    }
     private fun setProgressBarGone() {
         newProductProgressBar.visibility = View.GONE
     }
@@ -49,9 +51,11 @@ class NewProductActivity : AppCompatActivity() {
     }
     override fun onDestroy() {
         super.onDestroy()
+        unregisterReceivers()
+    }
+    private fun unregisterReceivers(){
         unregisterReceiver(receiverExactDate)
     }
-
     private fun setupListeners(){
         backArrow.setOnClickListener {
             showCustomDialog()
@@ -102,12 +106,10 @@ class NewProductActivity : AppCompatActivity() {
     }
 
     private fun saveProduct(product: Product){
-        //high order functions
         productViewModel.insertWithId(product) {id,prodName->setAlarmForProductId(id,prodName)}
     }
 
     private fun setAlarmForProductId(id: Long,prodName:String) {
-        Log.d("TAG","dodano produkt o id.... $id")
         val dateInMillis = parseDateToMillis(dateOfExpiry)
         setAlarm(dateInMillis,id,prodName)
     }
@@ -128,16 +130,18 @@ class NewProductActivity : AppCompatActivity() {
         val alarms =
             this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        val dayBeforeNotificationIntent = Intent(this, DateOfExpiryBroadcastReceiver::class.java)
-            dayBeforeNotificationIntent.putExtra("submittedProductName", prodName)
-            dayBeforeNotificationIntent.putExtra("notificationID", 0)
-            dayBeforeNotificationIntent.putExtra("id", 1)
+        val dayBeforeNotificationIntent = Intent(this, DateOfExpiryBroadcastReceiver::class.java).apply {
+            putExtra("submittedProductName", prodName)
+            putExtra("notificationID", 0)
+            putExtra("id", 1)
+        }
 
 
-        val exactDayNotificationIntent = Intent(this, DateOfExpiryBroadcastReceiver::class.java)
-            exactDayNotificationIntent.putExtra("submittedProductId", prodId)
-            exactDayNotificationIntent.putExtra("submittedProductName", prodName)
-            exactDayNotificationIntent.putExtra("id", 2)
+        val exactDayNotificationIntent = Intent(this, DateOfExpiryBroadcastReceiver::class.java).apply {
+            putExtra("submittedProductId", prodId)
+            putExtra("submittedProductName", prodName)
+            putExtra("id", 2)
+        }
 
 
         val dayBeforeWarning: PendingIntent =

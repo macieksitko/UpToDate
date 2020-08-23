@@ -3,6 +3,7 @@
     package="com.example.uptodate">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="true"
@@ -25,8 +26,18 @@
 
         <activity android:name=".activities.NewProductActivity" />
         <activity android:name=".activities.MainActivity" />
-
-        <receiver android:name=".receivers.DateOfExpiryBroadcastReceiver" />
+        <service
+            android:name=".services.DateOfExpiryService"
+            android:enabled="true"
+            android:exported="true" />
+        <receiver android:name=".receivers.DateOfExpiryBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
 
         <meta-data
             android:name="preloaded_fonts"

@@ -17,7 +17,7 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/materialToolbar2"
+                android:id="@+id/mainActivityToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"

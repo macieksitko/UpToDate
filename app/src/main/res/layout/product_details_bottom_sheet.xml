@@ -13,7 +13,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_bold"
-        android:text="Product 1"
         android:textSize="40sp"
         android:textColor="#000000"
         android:layout_marginTop="10dp"
@@ -21,7 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:drawableBottom="@drawable/prod_img"/>
+        app:drawableBottomCompat="@drawable/prod_img" />
 
 
     <com.google.android.material.card.MaterialCardView
@@ -48,7 +47,6 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="12dp"
-                android:text="20-20-2020"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.873"
                 app:layout_constraintStart_toEndOf="@+id/expiresOnTextView"
@@ -60,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/roboto_bold"
-                android:text="Details"
+                android:text="@string/productDetailedViewSubtitle"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.046"
@@ -74,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="5dp"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Added on"
+                android:text="@string/productDetailedViewFirstField"
                 android:textSize="17sp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/expiresOnTextView"
@@ -90,7 +88,7 @@
                 android:drawablePadding="5dp"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center_vertical"
-                android:text="Expires on"
+                android:text="@string/productDetailedViewSecondField"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -99,7 +97,6 @@
                 android:id="@+id/dateOfAddingTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20-20-2020"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.873"
                 app:layout_constraintStart_toEndOf="@+id/addedOnTextView"
@@ -112,7 +109,6 @@
         android:id="@+id/activityStateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:textSize="25sp"
         android:layout_marginTop="7dp"
         android:layout_marginBottom="7dp"
