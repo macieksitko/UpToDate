@@ -143,12 +143,14 @@ class NewProductActivity : AppCompatActivity() {
             putExtra("id", 2)
         }
 
+        val dayBeforeId = (prodId.toString()+0).toInt()
+        val exactDayId = (prodId.toString()+1).toInt()
 
         val dayBeforeWarning: PendingIntent =
-            PendingIntent.getBroadcast(this, 0, dayBeforeNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(this, dayBeforeId, dayBeforeNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val exactDayWarning: PendingIntent =
-            PendingIntent.getBroadcast(this, 1, exactDayNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(this, exactDayId, exactDayNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         alarms.setExact(AlarmManager.RTC_WAKEUP,dayBeforeDateInMillis,dayBeforeWarning)
         alarms.setExact(AlarmManager.RTC_WAKEUP, dateInMillis, exactDayWarning)

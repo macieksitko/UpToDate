@@ -139,19 +139,21 @@ class MainActivity : AppCompatActivity(),
 
         val product= adapter.getProductAtPosition(onDeletePosition)
         productViewModel.deleteProduct(product)
-        cancelNotifications()
+        cancelNotifications(product.id)
         isProductClicked = false
     }
-    private fun cancelNotifications(){
+    private fun cancelNotifications(prodId: Long){
+        val dayBeforeId = (prodId.toString()+0).toInt()
+        val exactDayId = (prodId.toString()+1).toInt()
         val alarms =
             this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val dayBeforeNotificationIntent = Intent(this, DateOfExpiryBroadcastReceiver::class.java)
         val exactDayNotificationIntent = Intent(this, DateOfExpiryBroadcastReceiver::class.java)
         val dayBeforeWarning: PendingIntent =
-            PendingIntent.getBroadcast(this, 0, dayBeforeNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(this,dayBeforeId , dayBeforeNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val exactDayWarning: PendingIntent =
-            PendingIntent.getBroadcast(this, 1, exactDayNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(this, exactDayId, exactDayNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         alarms.cancel(dayBeforeWarning)
         alarms.cancel(exactDayWarning)
