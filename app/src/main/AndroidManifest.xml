@@ -29,11 +29,16 @@
         <service
             android:name=".services.DateOfExpiryService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.uptodate.receivers.DateOfExpiryBroadcastReceiver" />
+            </intent-filter>
+        </service>
         <receiver android:name=".receivers.DateOfExpiryBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
+                <action android:name="com.example.uptodate.activities.NewProductActivity" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>

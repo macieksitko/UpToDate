@@ -131,13 +131,13 @@ class NewProductActivity : AppCompatActivity() {
             this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val dayBeforeNotificationIntent = Intent(this, DateOfExpiryBroadcastReceiver::class.java).apply {
+            action = "com.example.uptodate.activities.NewProductActivity"
             putExtra("submittedProductName", prodName)
             putExtra("notificationID", 0)
-            putExtra("id", 1)
-        }
-
+            putExtra("id", 1) }
 
         val exactDayNotificationIntent = Intent(this, DateOfExpiryBroadcastReceiver::class.java).apply {
+            action = "com.example.uptodate.activities.NewProductActivity"
             putExtra("submittedProductId", prodId)
             putExtra("submittedProductName", prodName)
             putExtra("id", 2)

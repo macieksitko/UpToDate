@@ -22,17 +22,18 @@ class DateOfExpiryService:Service() {
     private var notificationId = 1
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-
-        val productId = intent.getLongExtra("submittedProductId",-1)
-        val productName = intent.getStringExtra("submittedProductName")
-        val notificationMode = intent.getIntExtra("id",-1)
-        notificationId++
-        Log.d("TAG","serwis sie rozpoaczal, przyjal id o numerze...$notificationMode")
-        when (notificationMode){
-            1 -> textContent = "Your product $productName is up-to-date in 1 day. Hurry up"
-            2 -> textContent = "Your product $productName is up-to-date"
-        }
-        if (notificationMode==2) deactivation(productId)
+        if (intent.action == "com.example.uptodate.receivers.DateOfExpiryBroadcastReceiver" ){
+            val productId = intent.getLongExtra("submittedProductId",-1)
+            val productName = intent.getStringExtra("submittedProductName")
+            val notificationMode = intent.getIntExtra("id",-1)
+            notificationId++
+            Log.d("TAG","serwis sie rozpoaczal, przyjal id o numerze...$notificationMode")
+            when (notificationMode){
+                1 -> textContent = "Your product $productName is up-to-date in 1 day. Hurry up"
+                2 -> textContent = "Your product $productName is up-to-date"
+            }
+            if (notificationMode==2) deactivation(productId)
+        }else Log.d("TAG","No data received in DateOfExpiryService")
 
         showNotification()
         return START_STICKY
