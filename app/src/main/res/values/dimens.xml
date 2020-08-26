@@ -1,15 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--
-    Because the window insets on round devices are larger than 15dp, this padding only applies
-    to square screens.
-    -->
-    <dimen name="box_inset_layout_padding">0dp</dimen>
 
-    <!--
-    This padding applies to both square and round screens. The total padding between the buttons
-    and the window insets is box_inset_layout_padding (above variable) on square screens and
-    inner_frame_layout_padding (below variable) on round screens.
-    -->
-    <dimen name="inner_frame_layout_padding">5dp</dimen>
+    <dimen name="buttonCornerRadius">11dp</dimen>
+    <dimen name="buttonBottomPadding">8dp</dimen>
+    <dimen name="buttonWidth">100dp</dimen>
+    <dimen name="buttonHeight">50dp</dimen>
+    <dimen name="recyclerViewPadding">10dp</dimen>
+    <dimen name="recyclerViewPaddingTop">56dp</dimen>
+    <dimen name="recyclerViewPaddingBottom">50dp</dimen>
+    <dimen name="activityToolbarTextSize">20sp</dimen>
+    <dimen name="toolbarMarginStart">8dp</dimen>
+    <dimen name="productNameEditTextMarginTop">45dp</dimen>
+    <dimen name="newProductEditTextWidth">200dp</dimen>
+    <dimen name="dateOfExpiryEditTextMarginTop">25dp</dimen>
+    <dimen name="submitButtonMarginTop">15dp</dimen>
+    <dimen name="calendarIconMarginBottom">20dp</dimen>
+    <dimen name="splashIconWidth">200dp</dimen>
+    <dimen name="splashIconHeight">200dp</dimen>
+    <dimen name="dialogButtonMarginOnSides">32dp</dimen>
+    <dimen name="dialogContentMarginBottom">10dp</dimen>
+    <dimen name="dialogContentMarginOnSides">16dp</dimen>
+    <dimen name="dialogContentMarginTop">8dp</dimen>
+    <dimen name="dialogTitleMarginTop">8dp</dimen>
+    <dimen name="bottomSheetMaxHeight">500dp</dimen>
+    <dimen name="productNameTextSize">40sp</dimen>
+    <dimen name="productNameMarginTop">10dp</dimen>
+    <dimen name="bottomSheetHeaderMarginTop">16dp</dimen>
+    <dimen name="bottomSheetTextViewTextSize">17sp</dimen>
+    <dimen name="bottomSheetTextViewMarginBottom">40dp</dimen>
+    <dimen name="activityStateTextSize">25sp</dimen>
+    <dimen name="activityStateMargin">7dp</dimen>
+    <dimen name="bottomSheetTextViewMarginTop">10dp</dimen>
+    <dimen name="bottomSheetDateOfExpiryMarginTop">12dp</dimen>
+    <dimen name="recyclerViewProductNameMarginStart">15dp</dimen>
+    <dimen name="recyclerViewProductNameMarginTop">8dp</dimen>
+    <dimen name="expiresOnMarginTop">5dp</dimen>
+    <dimen name="expiresOnMarginBottom">8dp</dimen>
+    <dimen name="expiresOnTextSize">15sp</dimen>
+    <dimen name="recyclerViewDateOfExpiryPaddingEnd">10dp</dimen>
+    <dimen name="productImageWidth">60dp</dimen>
+    <dimen name="productImageHeight">60dp</dimen>
+    <dimen name="productImagePadding">4dp</dimen>
 </resources>

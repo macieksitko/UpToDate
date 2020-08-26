@@ -10,43 +10,43 @@
         android:id="@+id/prod_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="@dimen/recyclerViewProductNameMarginStart"
         android:layout_toEndOf="@+id/imgContainer"
-        android:paddingTop="8dp"
+        android:paddingTop="@dimen/recyclerViewProductNameMarginTop"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/prod_name"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="@dimen/recyclerViewProductNameMarginStart"
         android:layout_toEndOf="@+id/imgContainer"
-        android:paddingTop="5dp"
-        android:paddingBottom="8dp"
-        android:text="Expires on "
-        android:textSize="15sp" />
+        android:paddingTop="@dimen/expiresOnMarginTop"
+        android:paddingBottom="@dimen/expiresOnMarginBottom"
+        android:text="@string/recyclerViewItemTextView"
+        android:textSize="@dimen/expiresOnTextSize" />
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/date_of_expiring"
         android:layout_alignParentEnd="true"
-        android:paddingEnd="10dp"
-        android:textSize="15sp"
+        android:paddingEnd="@dimen/recyclerViewDateOfExpiryPaddingEnd"
+        android:textSize="@dimen/expiresOnTextSize"
         android:layout_below="@+id/prod_name"
         />
     <RelativeLayout
         android:id="@+id/imgContainer"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/productImageWidth"
+        android:layout_height="@dimen/productImageHeight"
         >
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:paddingStart="5dp"
+            android:paddingTop="@dimen/productImagePadding"
+            android:paddingBottom="@dimen/productImagePadding"
+            android:paddingStart="@dimen/productImagePadding"
             android:clickable="true"
             android:src="@drawable/prod_img"
             android:id="@+id/prodImg"

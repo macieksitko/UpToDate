@@ -23,4 +23,5 @@
     <string name="productDetailedViewSubtitle">Details</string>
     <string name="productDetailedViewFirstField">Added on</string>
     <string name="productDetailedViewSecondField">Expires on</string>
+    <string name="recyclerViewItemTextView">Expires on</string>
 </resources>
