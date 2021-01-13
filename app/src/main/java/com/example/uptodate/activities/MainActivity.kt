@@ -163,9 +163,6 @@ class MainActivity : AppCompatActivity(),
         val mBuilder = AlertDialog.Builder(this)
             .setView(dialogView)
 
-        val mAlertCreate = mBuilder.create()
-        mAlertCreate.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
         val mAlertDialog = mBuilder.show()
 
         dialogView.btnNegative.setOnClickListener{
