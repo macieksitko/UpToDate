@@ -1,5 +1,5 @@
 # UpToDate
-![alt text](https://raw.githubusercontent.com/macieksitko/UpToDate/master/screenshots/logo.png)
+![alt text](https://raw.githubusercontent.com/macieksitko/UpToDate/master/screenshots/logo.png)  
 UpToDate is an Android application written in Kotlin. The application is responsible for monitoring the expiry dates of products.
 
 
